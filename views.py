@@ -21,7 +21,7 @@ def getInfoSumbar():
         last_page_num = request.args['pagination']
         total = int(last_page_num)
         total_words = []
-        for i in range(1,int(total+1)):
+        for i in range(1,total):
             r = requests.get("https://infosumbar.net/page/"+format(i)+"/?s=padang+panjang")
             soup = BeautifulSoup(r.content.lower(), 'html.parser')
             words = soup.findAll('article')
@@ -35,7 +35,7 @@ def getInfoSumbar():
                 data={'url' : url,'tgl' : tgl}
                 total_words.append(data)
     hasil = {"total" : len(total_words), "data" : total_words}
-    return jsonify(int(last_page_num))
+    return jsonify(hasil)
 
 @App.route('/antara', methods=["GET", "POST"])
 def getAntara():
