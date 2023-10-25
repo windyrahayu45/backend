@@ -40,8 +40,8 @@ def getInfoSumbar():
 @App.route('/antara', methods=["GET", "POST"])
 def getAntara():
     if request.method == "GET":
-        startDate = '2023-01-01'
-        endDate = '2023-12-31'
+        startDate = request.args['mulai']
+        endDate = request.args['sampai']
         total_words = []
         output = []
         r = requests.get("https://www.antaranews.com/search?q=padang+panjang&startDate="+format(startDate)+"&endDate="+format(endDate)+"&inTitle=1&submit=Submit")
