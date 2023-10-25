@@ -8,5 +8,5 @@ data = []
 @App.route("/", methods=["GET", "POST"])
 def sample_api():
     if request.method == "POST":
-        data.append(request.get_json())
+        data.append('wndi')
     return json.dumps(data)
