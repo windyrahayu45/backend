@@ -16,8 +16,6 @@ def sample_api():
     return json.dumps(data)
 
 
-@App.route("/infosumbar", methods=["GET", "POST"])
-def infosumbar():
     if request.method == "GET":
         r = requests.get("https://infosumbar.net/?s=padang+panjang")
         soup = BeautifulSoup(r.content.lower(), 'html.parser')
