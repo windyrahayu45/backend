@@ -35,7 +35,7 @@ def getInfoSumbar():
     #             data={'url' : url,'tgl' : tgl}
     #             total_words.append(data)
     # hasil = {"total" : len(total_words), "data" : total_words}
-    return jsonify(int(last_page_num+1))
+    return jsonify(format(last_page_num))
 
 @App.route('/antara', methods=["GET", "POST"])
 def getAntara():
