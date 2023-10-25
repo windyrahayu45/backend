@@ -18,6 +18,7 @@ def sample_api():
 def getInfoSumbar():
     if request.method == "POST":
         last_page_num = request.json['pagination']
+        print(last_page_num)
         total_words = []
         for i in range(1,int(last_page_num+1)):
             r = requests.get("https://infosumbar.net/page/"+format(i)+"/?s=padang+panjang")
