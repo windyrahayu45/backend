@@ -32,6 +32,6 @@ def getInfoSumbar():
                 #author = word.find(attrs={'class': 'jeg_post_meta'}).find(attrs={'class': 'jeg_meta_author'}).a.text
                 data={'url' : url,'tgl' : tgl}
                 total_words.append(data)
-    hasil = {"total" : len(total_words), "data" : total_words}
-    return json.dumps(hasil)
+    #hasil = {"total" : len(total_words), "data" : total_words}
+    return json.dumps(total_words)
    
