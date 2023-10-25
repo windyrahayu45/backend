@@ -17,9 +17,8 @@ def sample_api():
 @App.route('/infosumbar', methods=["GET", "POST"])
 def getInfoSumbar():
     if request.method == "GET":
-        #last_page_num = request.form.get['pagination']
-        total_words = []
         last_page_num = 2
+        total_words = []
         for i in range(1,int(last_page_num+1)):
             r = requests.get("https://infosumbar.net/page/"+format(i)+"/?s=padang+panjang")
             soup = BeautifulSoup(r.content.lower(), 'html.parser')
