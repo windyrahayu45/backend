@@ -16,8 +16,8 @@ def sample_api():
 
 @App.route('/infosumbar', methods=["GET", "POST"])
 def getInfoSumbar():
-    if request.method == "POST":
-        last_page_num = request.json['pagination']
+    if request.method == "GET":
+        last_page_num = 2
         total_words = []
         output = []
         for i in range(1,int(last_page_num+1)):
