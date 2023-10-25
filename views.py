@@ -11,7 +11,7 @@ data = []
 @App.route("/", methods=["GET", "POST"])
 def sample_api():
     if request.method == "GET":
-        data.append('wndi')
+        data.append('Windi Sri Rahayu')
     return json.dumps(data)
 
 @App.route('/infosumbar', methods=["GET", "POST"])
