@@ -3,6 +3,7 @@ from flask import request, jsonify
 import json
 import requests
 from bs4 import BeautifulSoup
+import datetime
 
 
 data = []
@@ -75,6 +76,29 @@ def getHaluan():
                 tgl = word.find(attrs={'class': 'latest__date'}).get_text()
                 data={'url' : url,'tgl' : tgl}
                 total_words.append(data)
+    hasil = {"total" : len(total_words), "data" : total_words}
+    return jsonify(hasil)
+
+@App.route('/pasbana', methods=["GET", "POST"])
+def getPasBana():
+    if request.method == "GET":
+        totalBerita = request.args['total']
+        total_words = []
+        output = []
+        r = requests.get("https://www.pasbana.com/search/label/Padang%20Panjang?max-results="+format(totalBerita))
+        soup = BeautifulSoup(r.content.lower(), 'html.parser')
+        words = soup.findAll('div',{"class" : "post-outer"} )
+        count = len(words)
+        print(words)
+        for word in words:
+            url = word.find(attrs={'class': "post-title entry-title"}).a['href']
+            tgl = word.find("abbr",{'class': 'updated published timeago'}).get("title")
+            #date_format = '%Y-%m-%d %H:%M:%S'
+            d1 = datetime.datetime.strptime(tgl,"%Y-%m-%dt%H:%M:%S%z")
+            new_format = "%Y-%m-%d %H:%M:%S"
+            tgl2 = d1.strftime(new_format)
+            data={'url' : url,'tgl' : tgl2}
+            total_words.append(data)
     hasil = {"total" : len(total_words), "data" : total_words}
     return jsonify(hasil)
    
