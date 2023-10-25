@@ -63,13 +63,13 @@ def getHaluan():
         last_page_num = request.args['pagination']
         total = int(last_page_num)
         total_words = []
-        for i in range(1,int(last_page_num+1)):
+        for i in range(1,total):
             url = "https://www.harianhaluan.com/search?q=padang%20panjang&page="+format(i)
             headers = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"}
             webpage = requests.get(url,headers=headers)
             soup = BeautifulSoup(webpage.content, 'html.parser')
             words = soup.findAll('div',{"class" : "latest__item"} )
-            
+
             for word in words:
                 url = word.find(attrs={'class': 'latest__title'}).a['href']
                 tgl = word.find(attrs={'class': 'latest__date'}).get_text()
