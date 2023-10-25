@@ -33,5 +33,5 @@ def getInfoSumbar():
                 data={'url' : url,'tgl' : tgl}
                 total_words.append(data)
     hasil = {"total" : len(total_words), "data" : total_words}
-    return json.dumps(hasil)
+    return jsonify(hasil)
    
