@@ -1,10 +1,7 @@
 from Cors import App 
 from flask import request
 import json
-from bs4 import BeautifulSoup
-from urllib.request import Request, urlopen
-import datetime
-import requests
+
 
 data = []
 
