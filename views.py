@@ -188,7 +188,6 @@ def getMinangSatu():
 
         for word in words:
             url = word['href']
-            #tgl = word.find(attrs={'class': 'td-post-date'}).get_text()
             data={'url' : url}
             total_words.append(data)
     hasil = {"total" : len(total_words), "data" : total_words}
