@@ -88,8 +88,6 @@ def getPasBana():
         r = requests.get("https://www.pasbana.com/search/label/Padang%20Panjang?max-results="+format(totalBerita))
         soup = BeautifulSoup(r.content.lower(), 'html.parser')
         words = soup.findAll('div',{"class" : "post-outer"} )
-        count = len(words)
-        print(words)
         for word in words:
             url = word.find(attrs={'class': "post-title entry-title"}).a['href']
             tgl = word.find("abbr",{'class': 'updated published timeago'}).get("title")
@@ -168,5 +166,30 @@ def getInvestasi():
                 tgl = word.find(attrs={'class': 'td-post-date'}).get_text()
                 data={'url' : url,'tgl' : tgl}
                 total_words.append(data)
+    hasil = {"total" : len(total_words), "data" : total_words}
+    return jsonify(hasil)
+
+
+@App.route('/minangsatu', methods=["GET", "POST"])
+def getMinangSatu():
+    if request.method == "GET":
+        total_words = []
+        output = []
+        headers = {
+        'User-Agent': 'Mozilla/5.0',
+        'X-Api-Key':'adf51226795afbc4e7575ccc124face7',
+        }
+        url = "https://minangsatu.com/cari/padang%20panjang"
+
+        headers = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"}
+        webpage = requests.get(url,headers=headers)
+        soup = BeautifulSoup(webpage.content, 'html.parser')
+        words = soup.findAll(['a'])
+
+        for word in words:
+            url = word['href']
+            #tgl = word.find(attrs={'class': 'td-post-date'}).get_text()
+            data={'url' : url}
+            total_words.append(data)
     hasil = {"total" : len(total_words), "data" : total_words}
     return jsonify(hasil)
