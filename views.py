@@ -128,3 +128,26 @@ def getSinggalang():
     hasil = {"total" : len(total_words), "data" : total_words}
     return jsonify(hasil)
    
+
+@App.route('/fajarsumbar', methods=["GET", "POST"])
+def getFajarSumbar():
+    if request.method == "GET":
+        totalBerita = request.args['total']
+        total_words = []
+        output = []
+        r = requests.get("https://www.fajarsumbar.com/search?q=padang+panjang&max-results="+format(totalBerita))
+        soup = BeautifulSoup(r.content.lower(), 'html.parser')
+        words = soup.findAll('div',{"class" : "date-outer"} )
+        count = len(words)
+        print(words)
+        for word in words:
+            url = word.find(attrs={'class': "post-title entry-title"}).a['href']
+            tgl = word.find(attrs={'class': 'date-header-home'}).get_text()
+            #date_format = '%Y-%m-%d %H:%M:%S'
+            d1 = datetime.datetime.strptime(tgl,"%Y-%m-%dt%H:%M:%S%z")
+            new_format = "%Y-%m-%d %H:%M:%S"
+            tgl2 = d1.strftime(new_format)
+            data={'url' : url,'tgl' : tgl2}
+            total_words.append(data)
+    hasil = {"total" : len(total_words), "data" : total_words}
+    return jsonify(hasil)
