@@ -352,3 +352,25 @@ def getRelasiPublik():
             total_words.append(data)
     hasil = {"total" : len(total_words), "data" : total_words}
     return jsonify(hasil)
+
+
+@App.route('/dutametro', methods=["GET", "POST"])
+def getDutaMetro():
+    if request.method == "GET":
+        last_page_num = request.args['pagination']
+        total = int(last_page_num)
+        total_words = []
+        for i in range(1,total):
+            url = "https://dutametro.com/page/"+format(i)+"/?s=padang+panjang"
+            headers = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"}
+            webpage = requests.get(url,headers=headers)
+            soup = BeautifulSoup(webpage.content, 'html.parser')
+            words = soup.findAll('div',{"class" : "tdb_module_loop td_module_wrap td-animation-stack td-cpt-post"} )
+
+            for word in words:
+                url = word.find(attrs={'class': 'entry-title td-module-title'}).a['href']
+                tgl = word.find(attrs={'class': 'td-post-date'}).get_text()
+                data={'url' : url,'tgl' : tgl}
+                total_words.append(data)
+    hasil = {"total" : len(total_words), "data" : total_words}
+    return jsonify(hasil)
