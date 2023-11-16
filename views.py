@@ -304,3 +304,27 @@ def getBeritaMinang():
                 total_words.append(data)
     hasil = {"total" : len(total_words), "data" : total_words}
     return jsonify(hasil)
+
+@App.route('/ekspresnews', methods=["GET", "POST"])
+def getEkspressNews():
+    if request.method == "GET":
+        total_words = []
+        output = []
+        headers = {
+        'User-Agent': 'Mozilla/5.0',
+        'X-Api-Key':'adf51226795afbc4e7575ccc124face7',
+        }
+        url = "https://ekspresnews.com/?s=padang+panjang&post_type=post"
+
+        headers = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"}
+        webpage = requests.get(url,headers=headers)
+        soup = BeautifulSoup(webpage.content, 'html.parser')
+        words = soup.findAll('article')
+
+        for word in words:
+            url = word.find(attrs={'class': 'entry-title'}).a['href']
+            tgl = word.find(attrs={'class': 'posted-on'}).get_text()
+            data={'url' : url,'tgl' : tgl}
+            total_words.append(data)
+    hasil = {"total" : len(total_words), "data" : total_words}
+    return jsonify(hasil)
